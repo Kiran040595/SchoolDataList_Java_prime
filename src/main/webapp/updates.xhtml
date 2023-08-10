@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <title>Update School Data</title>
+</head>
+
+<body>
+    <h3>Update School Data</h3>
+    <h:form>
+        <h:outputText value="ID: #{param.id}" />
+        <h:inputText value="#{sc.updatedSchool.id}" required="true" />
+        <br />        
+        <h:outputText value="Name" />
+        <h:inputText value="#{sc.updatedSchool.name}" required="true" />
+        <br />
+        <h:outputText value="Class" />
+        <h:inputText value="#{sc.updatedSchool.className}" required="true" />
+        <br />
+        <h:outputText value="Marks" />
+        <h:inputText value="#{sc.updatedSchool.marks}" required="true" />
+        <br />
+        
+        <h:commandButton value="Update" action="#{sc.updateSchool}"></h:commandButton>
+       
+       <h:commandButton value="Home" action="SchoolDetailsList"></h:commandButton>
+   
+
+    </h:form>
+    
+</body>
+
+</html>

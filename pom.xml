@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.sample.application</groupId>
+	<artifactId>ToDoList</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>todolist application using Java EE 6</name>
+
+	<repositories>
+		<repository>
+			<id>project_lib</id>
+			<name>Repository in project's lib dir</name>
+			<layout>default</layout>
+			<url>file:///${project.basedir}/local_tomee/lib</url>
+		</repository>
+	</repositories>
+
+
+	<properties>
+		<version.java>1.8</version.java>
+		<version.openejb>4.6.0</version.openejb>
+		<version.openejb.javaee-api>6.0-5</version.openejb.javaee-api>
+		<version.tomee>1.6.0-SNAPSHOT</version.tomee>
+		<version.myfaces>2.1.12</version.myfaces>
+		<version.maven.war.plugin>2.4</version.maven.war.plugin>
+		<version.maven.compiler.plugin>3.1</version.maven.compiler.plugin>
+		<version.maven.surefire.plugin>2.16</version.maven.surefire.plugin>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.resources.overwrite>true</maven.resources.overwrite>
+
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.openejb</groupId>
+			<artifactId>mbean-annotation-api</artifactId>
+			<version>4.6.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.openejb</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>${version.openejb.javaee-api}</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.apache.myfaces.core</groupId>
+			<artifactId>myfaces-api</artifactId>
+			<version>${version.myfaces}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>5.2</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.4-1204-jdbc42</version>
+			<scope>provided</scope>
+		</dependency>
+				<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+		</dependency>
+		    <dependency>
+                <groupId>org.seleniumhq.selenium</groupId>
+                <artifactId>selenium-java</artifactId>
+                <version>2.53.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.seleniumhq.selenium</groupId>
+                <artifactId>htmlunit-driver</artifactId>
+                <version>2.21</version>
+            </dependency>
+            
+            <dependency>
+            <groupId>org.fluttercode.datafactory</groupId>
+            <artifactId>datafactory</artifactId>
+            <version>0.8</version>
+        </dependency>
+        
+<dependency>
+    <groupId>org.apache.deltaspike.modules</groupId>
+    <artifactId>deltaspike-data-module-api</artifactId>
+    <version>1.9.2</version> <!-- Use the latest version -->
+</dependency>
+
+        
+            
+            
+     
+	</dependencies>
+	
+
+	<build>
+		<finalName>todolist</finalName>
+
+		<resources>
+			<resource>
+				<directory>${project.basedir}/src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${version.maven.compiler.plugin}</version>
+				<inherited>true</inherited>
+				<configuration>
+					<source>${version.java}</source>
+					<target>${version.java}</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${version.maven.war.plugin}</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.7</version>
+				<executions>
+					<execution>
+						<id>copy-configs</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${workspace.location}/conf</outputDirectory>
+							<resources>
+								<resource>
+									<directory>/local_tomee/conf</directory>
+									<includes>
+										<include>**</include>
+									</includes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-libs</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${workspace.location}/lib</outputDirectory>
+							<resources>
+								<resource>
+									<directory>/local_tomee/lib</directory>
+									<includes>
+										<include>**.jar</include>
+									</includes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${version.maven.war.plugin}</version>
+				<configuration>
+				  <warName>todolist</warName>
+				  <outputDirectory>${workspace.location}/webapps</outputDirectory>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+</project>

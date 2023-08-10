@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Primefaces</title>
+	<link rel="stylesheet" href="mystyle.css" type="text/css" />
+	<link rel="stylesheet" href="growl.css" type="text/css" />
+</h:head>
+
+<h:body>
+
+	<h3>Todo list Primefaces</h3>
+
+	<f:view>
+
+		<h:form binding="#{todoPrime.form}" rendered="false" styleClass="todo">
+			<h:panelGrid columns="2">
+				<h:outputText value="Title"></h:outputText>
+				<h:inputText value="#{todoPrime.todoNew.title}" required="true"
+					requiredMessage="Title is required">
+				</h:inputText>
+				<h:outputText value="Description"></h:outputText>
+				<h:inputTextarea value="#{todoPrime.todoNew.description}" cols="40"
+					rows="4"></h:inputTextarea>
+				<h:outputText value="Prio"></h:outputText>
+				<h:selectOneMenu validatorMessage="required"
+					value="#{todoPrime.todoNew.priority}">
+					<f:selectItems value="#{todoPrime.priorities}" />
+				</h:selectOneMenu>
+			</h:panelGrid>
+			<h:panelGroup>
+				<h:commandButton action="#{todoPrime.save}" value="Save"
+					accesskey="s">
+				</h:commandButton>
+				<h:commandButton action="#{todoPrime.cancel}" value="Cancel"
+					accesskey="c" immediate="true">
+				</h:commandButton>
+			</h:panelGroup>
+		</h:form>
+
+		<h:form>
+			<h:panelGrid columns="4">
+			
+				<h:commandButton value="Add new Todo"
+					binding="#{todoPrime.addCommand}" action="#{todoPrime.addNew}" />
+				<p:spacer width="40" height="10" />
+				<h:commandButton id="hide"
+					actionListener="#{todoPrime.displayTable}" value="Hide Table">
+				</h:commandButton>
+				<p:spacer width="40" height="10" />
+				<h:commandButton id="show"
+					actionListener="#{todoPrime.displayTable}" value="Show Table">
+				</h:commandButton>
+				<p:spacer width="40" height="10" />
+				<h:commandButton action="Todo" value="Goto Jsf" />
+			</h:panelGrid>
+		</h:form>
+
+		<h:form binding="#{todoPrime.tableForm}">
+
+			<h:dataTable var="todo" value="#{todoPrime.todos}" styleClass="todo"
+				headerClass="todoheader" columnClasses="first, rest"
+				id="todoDataTable">
+
+				<h:column>
+					<f:facet name="header">
+						<h:column>
+							<h:outputText value="Prio"></h:outputText>
+						</h:column>
+					</f:facet>
+					<h:selectOneMenu value="#{todo.priority}" rendered="#{todo.edit}">
+						<f:selectItems value="#{todoPrime.priorities}" />
+					</h:selectOneMenu>
+					<h:outputText value="#{todo.priority}" rendered="#{not todo.edit}"></h:outputText>
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">
+						<h:column>
+							<h:outputText value="Title"></h:outputText>
+						</h:column>
+					</f:facet>
+					<h:inputText value="#{todo.title}" rendered="#{sc.edit}"></h:inputText>
+					<h:outputText value="#{todo.title}" rendered="#{not sc.edit}"></h:outputText>
+
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">
+						<h:column>
+							<h:outputText value="Description"></h:outputText>
+						</h:column>
+					</f:facet>
+					<h:inputText value="#{todo.description}" rendered="#{todo.edit}"></h:inputText>
+					<h:outputText value="#{todo.description}"
+						rendered="#{not todo.edit}"></h:outputText>
+				</h:column>
+
+				<h:column>
+
+					<p:growl id="message" life="1000" />
+
+					<f:facet name="header">
+						<h:column>
+							<h:outputText value="Actions"></h:outputText>
+						</h:column>
+					</f:facet>
+					<p:commandButton id="edit" value="Edit" update="@(.todo)"
+						action="#{todoPrime.edit}" disabled="#{todoPrime.editDisabled}"
+						rendered="#{not todo.edit}">
+						<f:setPropertyActionListener target="#{todoPrime.todo}"
+							value="#{todo}" />
+					</p:commandButton>
+
+					<p:commandButton value="Delete" action="#{todoPrime.delete}"
+						update="@(.todo)" rendered="#{not todo.edit}"
+						disabled="#{todoPrime.editDisabled}">
+						<f:setPropertyActionListener target="#{todoPrime.todo}"
+							value="#{todo}" />
+						<p:confirm header="Confirmation" message="Are you sure?"
+							icon="ui-icon-alert" />
+
+					</p:commandButton>
+
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+						<div align="center">
+							<p:commandButton value="Yes" type="button"
+								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							<p:commandButton value="No" type="button"
+								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+						</div>
+					</p:confirmDialog>
+
+					<p:commandButton id="save" value="Save" update="@(.todo)"
+						action="#{todoPrime.editSave}" rendered="#{todo.edit}">
+						<f:setPropertyActionListener target="#{todoPrime.todo}"
+							value="#{todo}" />
+					</p:commandButton>
+					<p:commandButton id="reset" value="Reset" update="@(.todo)"
+						action="#{todoPrime.editReset}" rendered="#{todo.edit}">
+						<f:setPropertyActionListener target="#{todoPrime.todo}"
+							value="#{todo}" />
+					</p:commandButton>
+				</h:column>
+
+			</h:dataTable>
+
+
+		</h:form>
+
+
+
+	</f:view>
+</h:body>
+
+</html>

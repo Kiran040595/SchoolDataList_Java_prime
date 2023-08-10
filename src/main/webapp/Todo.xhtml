@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>jsf</title>
+
+</head>
+<body>
+	<h3>Todo list Jsf</h3>
+	<f:view>
+		<h:messages layout="table"></h:messages>
+		
+		<h:form binding="#{todoController.form}" rendered="false"
+			styleClass="todo">
+			<h:panelGrid columns="2">
+				<h:outputText value="Title"></h:outputText>
+				<h:inputText value="#{todoController.todoNew.title}" required="true"
+					requiredMessage="Title is required">
+				</h:inputText>
+				<h:outputText value="Description"></h:outputText>
+				<h:inputTextarea value="#{todoController.todoNew.description}"
+					cols="40" rows="4"></h:inputTextarea>
+				<h:outputText value="Prio"></h:outputText>
+				<h:selectOneMenu validatorMessage="required"
+					value="#{todoController.todoNew.priority}">
+					<f:selectItems value="#{todoController.priorities}" />
+				</h:selectOneMenu>
+			</h:panelGrid>
+			<h:panelGroup>
+				<h:commandButton action="#{todoController.save}" value="Save"
+					accesskey="s">
+				</h:commandButton>
+				<h:commandButton action="#{todoController.cancel}" value="Cancel"
+					accesskey="c" immediate="true">
+				</h:commandButton>
+			</h:panelGroup>
+		</h:form>
+
+		<h:form>
+			<h:panelGrid columns="4">
+				<h:commandLink binding="#{todoController.addCommand}" accesskey="n"
+					action="#{todoController.addNew}" value="Add new Todo">
+				</h:commandLink>
+				<h:outputText value="  " escape="false" />
+				<h:commandLink id="hide"
+					actionListener="#{todoController.displayTable}" value="Hide Table">
+				</h:commandLink>
+				<h:outputText value="  " escape="false" />
+				<h:commandLink id="show"
+					actionListener="#{todoController.displayTable}" value="Show Table">
+				</h:commandLink>
+				<h:outputText value="  " escape="false" />
+				
+				<h:commandLink id="jsf" action="TodoPrime" value="Goto Prime">
+				</h:commandLink>
+				<br/>
+				<h:commandLink value= "Goto School Data" action="SchoolDataList"></h:commandLink>
+				<h:commandLink value= "Goto school Prime Data" action="SchoolPrime"></h:commandLink>
+			</h:panelGrid>
+		</h:form>
+
+		<h:form binding="#{todoController.tableForm}">
+
+			<h:dataTable value="#{todoController.todos}" var="todo"
+				styleClass="todo" headerClass="todoheader"
+				columnClasses="first, rest">
+				<h:column>
+					<f:facet name="header">
+						<h:column>
+							<h:outputText value="Prio"></h:outputText>
+						</h:column>
+					</f:facet>
+					<h:outputText value="#{todo.priority}"></h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:column>
+							<h:outputText value="Title"></h:outputText>
+						</h:column>
+					</f:facet>
+					<h:outputText value="#{todo.title}"></h:outputText>
+
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">
+						<h:column>
+							<h:outputText value="Description"></h:outputText>
+						</h:column>
+					</f:facet>
+					<h:outputText value="#{todo.description}"></h:outputText>
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">
+						<h:column>
+							<h:outputText value="Actions"></h:outputText>
+						</h:column>
+					</f:facet>
+					<h:panelGrid columns="2">
+						<h:commandLink value="delete" action="#{todoController.delete}">
+							<f:setPropertyActionListener target="#{todoController.todo}"
+								value="#{todo}" />
+						</h:commandLink>
+					</h:panelGrid>
+				</h:column>
+			</h:dataTable>
+
+		</h:form>
+	</f:view>
+	
+	
+	
+	
+	
+	
+	
+	
+</body>
+</html>

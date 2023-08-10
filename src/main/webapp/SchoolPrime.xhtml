@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <title>School Data List</title>
+</h:head>
+<h:body>
+    <h3>School Data List</h3>
+   
+    <h:form id="schoolForm">
+        <p:outputLabel value="NAME" />
+        <p:inputText value="#{sc.newSchool.name}" required="true"  />
+        <br/>
+        <p:outputLabel value="CLASS" />
+        <p:inputText value="#{sc.newSchool.className}" required="true"  />
+        <br/>
+        <p:outputLabel value="MARKS" />
+        <p:inputText value="#{sc.newSchool.marks}" required="true"  />
+        <br/>
+        <p:commandButton value="Add" action="#{sc.addNew}" update="schoolDataForm schoolForm" >
+    
+</p:commandButton>
+
+
+        
+    </h:form>
+    
+    
+    <h:form id ="schoolDataForm" binding="#{sc.tableForm}">
+     <p:growl id="msgs" showDetail="true"/> 
+    
+    <div class="card">
+
+        <p:dataTable id="schoolData" value="#{sc.lazySchoolModel}" var="sch" update="schoolData" editable="true" currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+        paginator="true" rows="10" lazy="true"  paginatorTemplate=
+                     " {CurrentPageReport} {RowsPerPageDropdown} {FirstPageLink}
+                     {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                     
+             rowsPerPageTemplate="10,25,50,75,100,150"  >
+        
+      <p:ajax event="rowEdit" listener="#{sc.updateSchool}" update="schoolDataForm:msgs" />
+                <p:ajax event="rowEditCancel" listener="#{sc.onRowCancel}" update="schoolDataForm:msgs" /> 
+               
+                
+            
+            <p:column headerText="ID" sortBy="#{sch.id}" filterBy="#{sch.id}" filterMatchMode="contains" >
+                <h:outputText value="#{sch.id}" />
+            </p:column>
+            
+            <p:column headerText="Name"  sortBy="#{sch.name}" filterBy="#{sch.name}" filterMatchMode="contains"  >
+                <p:cellEditor>
+                    <f:facet name="output">
+                        <h:outputText value="#{sch.name}" />
+                    </f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{sch.name}"  />
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
+            
+            <p:column headerText="Class" sortBy="#{sch.className}" filterBy="#{sch.className}" filterMatchMode="contains">
+                <p:cellEditor>
+                    <f:facet name="output">
+                        <h:outputText value="#{sch.className}" />
+                    </f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{sch.className}" />
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
+            
+            <p:column headerText="Marks" sortBy="#{sch.marks}" filterBy="#{sch.marks}" filterMatchMode="contains">
+                <p:cellEditor>
+                    <f:facet name="output">
+                        <h:outputText value="#{sch.marks}" />
+                    </f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{sch.marks}"  />
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
+
+            
+            <p:column headerText="Actions" >
+                <p:commandButton value="Delete" action="#{sc.delete}" update="schoolData" process="@this">
+                    <f:setPropertyActionListener target="#{sc.school}" value="#{sch}" />
+                </p:commandButton>
+            </p:column>
+            
+           <!--  <p:column headerText="Actions">
+                <p:commandButton value="Edit" action="#{sc.edit}" update="schoolDataForm" process="@this">
+                <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row" action="#{sc.edit}" />
+                    <f:setPropertyActionListener target="#{sc.school}" value="#{sch}" />
+                </p:commandButton>
+                
+            </p:column>      -->                
+                      
+                                 
+            
+         
+            
+           <!--  <p:column headerText="Actions">
+                <p:commandButton value="Update" action="#{sc.updateSchool}" update="schoolDataForm" process="@this">
+                    <f:setPropertyActionListener target="#{sc.updatedSchool}" value="#{sch}" />
+                </p:commandButton>
+            </p:column>   -->
+            
+            <p:column style="width:6rem">
+                <p:rowEditor />
+            </p:column>
+            
+                    
+     </p:dataTable>
+     </div>
+        </h:form>            
+</h:body>
+</html>

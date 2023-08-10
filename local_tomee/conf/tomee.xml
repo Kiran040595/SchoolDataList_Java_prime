@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tomee>
+
+	<Resource id="applicationPetstoreDS" type="javax.sql.DataSource">
+	    jdbcDriver org.postgresql.Driver
+		jdbcUrl    jdbc:postgresql://localhost:5432/postgres
+		userName   postgres
+		password   root
+		jtaManaged true
+	</Resource>
+	
+	<Resource id="applicationLocalDS" type="javax.sql.DataSource">
+	    jdbcDriver org.postgresql.Driver
+		jdbcUrl    jdbc:postgresql://localhost:5432/postgres
+		userName   postgres
+		password   root
+		jtaManaged false
+	</Resource>
+	
+<Deployments dir="apps" />
+
+</tomee>
+		
+
+		

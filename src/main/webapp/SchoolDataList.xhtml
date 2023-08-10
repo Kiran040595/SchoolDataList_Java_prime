@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <title>School Data List</title>
+</head>
+<body>
+    <h3>School Data List</h3>
+    <h:form>
+        <h:outputText value="NAME" />
+        <h:inputText value="#{sc.newSchool.name}" required="true"  />
+        <br/>
+        <h:outputText value="CLASS" />
+        <h:inputText value="#{sc.newSchool.className}" required="true"  />
+        <br/>
+        <h:outputText value="MARKS" />
+        <h:inputText value="#{sc.newSchool.marks}" required="true"  />
+        <br/>
+        <h:commandButton value="Add" action="#{sc.addNew}" />
+        <h:commandButton value= "Goto School Prime" action="SchoolPrime"/>
+    </h:form>
+
+    <h:form>
+        <h:dataTable  id="schoolData" value="#{sc.schools}" var="sch" editable="true" border="1">
+            <h:column>
+                <f:facet name="header" >ID</f:facet>
+                <h:outputText value="#{sch.id}"  > </h:outputText>
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">Name</f:facet>
+                <h:inputText value="#{sch.name}" rendered="#{sch.edit}" />
+                <h:outputText value="#{sch.name}" rendered="#{not sch.edit}" />
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">Class</f:facet>
+                <h:inputText value="#{sch.className}" rendered="#{sch.edit}" />
+                <h:outputText value="#{sch.className}" rendered="#{not sch.edit}"/>
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">Marks</f:facet>
+                <h:inputText value="#{sch.marks}" rendered="#{sch.edit}" />
+                <h:outputText value="#{sch.marks}" rendered="#{not sch.edit}"/>
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">Actions</f:facet>
+                <h:commandLink value="Delete" action="#{sc.delete}">
+                    <f:setPropertyActionListener target="#{sc.school}" value="#{sch}" />
+                </h:commandLink>    
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">Actions</f:facet>
+                <h:commandLink value="Edit" action="#{sc.edit}">
+                    <f:setPropertyActionListener target="#{sc.school}" value="#{sch}" />
+                </h:commandLink>
+                </h:column>
+                
+                <h:column>
+                
+                <h:commandLink value="Update" action="#{sc.updateSchool}">
+                    <f:setPropertyActionListener target="#{sc.updatedSchool}" value="#{sch}" />
+                </h:commandLink>
+            </h:column>
+        </h:dataTable>
+    </h:form>
+</body>
+</html>
