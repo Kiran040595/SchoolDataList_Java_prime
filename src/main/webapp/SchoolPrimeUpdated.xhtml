@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>School Data List</title>
+</h:head>
+<h:body>
+	<h3>School Data List</h3>
+
+
+	<h:form id="schoolForm">
+		<p:panelGrid columns="4" columnClasses="labelColumn, valueColumn">
+			<p:outputLabel value="NAME" />
+			<br />
+			<p:inputText value="#{scu.newSchool.name}" required="true" />
+			<br />
+			<p:outputLabel value="CLASS" />
+			<br />
+			<p:inputText value="#{scu.newSchool.className}" required="true" />
+			<br />
+			<p:outputLabel value="MARKS" />
+			<br />
+			<p:inputText value="#{scu.newSchool.marks}" required="true" />
+			<br />
+			<p:outputLabel value="Join Date" />
+			<br />
+			<p:calendar value="#{scu.newSchool.joinDate}" pattern="dd-MM-yyyy" timeZone="UTC"></p:calendar>
+			<br />
+			<p:outputLabel value="Status" />
+			<br />
+			<p:selectOneMenu value="#{scu.newSchool.status}">
+				<f:selectItem itemLabel="Select One" itemValue="status" />
+				<f:selectItem itemLabel="Pass" itemValue="Pass" />
+				<f:selectItem itemLabel="Fail" itemValue="Fail" />
+
+			</p:selectOneMenu>
+			<br />
+
+
+			<p:outputLabel for="district" value="District: " />
+			<br />
+			<p:selectOneMenu id="district" value="#{scu.district}"
+				style="width:150px">
+				<p:ajax listener="#{scu.onDistrictChange}" update="city" />
+				<f:selectItem itemLabel="Select District" itemValue=""
+					noSelectionOption="true" />
+				<f:selectItems value="#{scu.districts}" />
+			</p:selectOneMenu>
+			<br />
+			<p:outputLabel for="city" value="City: " />
+			<br />
+			<p:selectOneMenu id="city" value="#{scu.city}" style="width:150px">
+				<f:selectItem itemLabel="Select City" itemValue=""
+					noSelectionOption="true" />
+				<f:selectItems value="#{scu.cities}" />
+			</p:selectOneMenu>
+			<br />
+		</p:panelGrid>
+		<p:commandButton value="Add" action="#{scu.addNew}"
+			update="schoolDataForm schoolForm ">
+		</p:commandButton>
+	</h:form>
+
+
+	<h:form id="schoolDataForm" binding="#{scu.tableForm}">
+		<p:growl id="msgs" showDetail="true" />
+
+		<div class="card">
+
+			<p:dataTable id="schoolData" value="#{scu.lazySchoolModel}" var="sch"
+				update="schoolData" editable="true"
+				currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+				paginator="true" rows="10" lazy="true"
+				paginatorTemplate=" {CurrentPageReport} {RowsPerPageDropdown} {FirstPageLink}
+                     {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				rowsPerPageTemplate="10,25,50,75,100,150">
+
+				<p:ajax event="rowEdit" listener="#{scu.updateSchool}"
+					update="schoolDataForm:msgs" />
+				<p:ajax event="rowEditCancel" listener="#{scu.onRowCancel}"
+					update="schoolDataForm:msgs" />
+
+
+
+				<p:column headerText="ID" sortBy="#{sch.id}" filterBy="#{sch.id}"
+					filterMatchMode="contains">
+					<h:outputText value="#{sch.id}" />
+				</p:column>
+
+				<p:column headerText="Name" sortBy="#{sch.name}"
+					filterBy="#{sch.name}" filterMatchMode="contains">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{sch.name}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{sch.name}" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Class" sortBy="#{sch.className}"
+					filterBy="#{sch.className}" filterMatchMode="contains">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{sch.className}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{sch.className}" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Marks" sortBy="#{sch.marks}"
+					filterBy="#{sch.marks}" filterMatchMode="contains">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{sch.marks}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{sch.marks}" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+
+				<p:column headerText="District" sortBy="#{sch.district}"
+					field="district" filterBy="#{sch.district}"
+					filterMatchMode="contains">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{sch.district}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:selectOneMenu id="district" value="#{scu.district}"
+								style="width:150px">
+								<p:ajax listener="#{scu.onDistrictChange}" update="city1" />
+								<f:selectItem itemLabel="Select District"
+									itemValue="#{sch.district}" noSelectionOption="true" />
+								<f:selectItems value="#{scu.districts}" />
+							</p:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="City" sortBy="#{sch.city}" field="city"
+					filterBy="#{sch.city}" filterMatchMode="contains">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{sch.city}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:selectOneMenu id="city1" value="#{scu.city}"
+								style="width:150px">
+								<f:selectItem itemLabel="Select City" itemValue="#{sch.city}"
+									noSelectionOption="true" />
+								<f:selectItems value="#{scu.cities}" />
+							</p:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+
+				<p:column headerText="Date Of Join" sortBy="#{sch.joinDate}">
+					
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{sch.joinDate}">
+							<f:convertDateTime pattern="dd-MM-yyyy"  type="date"></f:convertDateTime>
+
+							</h:outputText>
+						</f:facet>
+						<f:facet name="input">
+							<p:calendar value="#{sch.joinDate}" timeZone="UTC">
+							</p:calendar>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+
+
+				<p:column headerText="Status" sortBy="#{sch.status}" field="status"
+					filterMatchMode="exact">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{sch.status}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:selectOneMenu value="#{sch.status}">
+								<f:selectItem itemLabel="Select One   " itemValue="           " />
+								<f:selectItem itemLabel="Pass         " itemValue="Pass" />
+								<f:selectItem itemLabel="Fail         " itemValue="Fail" />
+							</p:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+
+				<p:column headerText="Actions">
+					<p:commandButton value="Delete" action="#{scu.delete}"
+						update="schoolData schoolDataForm " process="@this">
+						<f:setPropertyActionListener target="#{scu.school}" value="#{sch}" />
+					</p:commandButton>
+				</p:column>
+
+				<p:column style="width:6rem">
+					<p:rowEditor />
+				</p:column>
+			</p:dataTable>
+		</div>
+
+		<div class="card">
+			<h5>PickList to Delete Multiple Items</h5>
+			<p:pickList id="pickList" value="#{scu.selectedIdsDualListModel}"
+				var="id" itemLabel="#{id}" itemValue="#{id}" />
+			<p:commandButton value="Delete Selected IDs"
+				action="#{scu.deleteSelectedSchools}" update="schoolDataForm" />
+		</div>
+	</h:form>
+</h:body>
+</html>

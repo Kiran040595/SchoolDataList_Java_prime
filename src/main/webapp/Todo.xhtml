@@ -40,7 +40,7 @@
 		</h:form>
 
 		<h:form>
-			<h:panelGrid columns="4">
+			<h:panelGrid columns="2">
 				<h:commandLink binding="#{todoController.addCommand}" accesskey="n"
 					action="#{todoController.addNew}" value="Add new Todo">
 				</h:commandLink>
@@ -58,7 +58,11 @@
 				</h:commandLink>
 				<br/>
 				<h:commandLink value= "Goto School Data" action="SchoolDataList"></h:commandLink>
+				<br/>
 				<h:commandLink value= "Goto school Prime Data" action="SchoolPrime"></h:commandLink>
+				<br/>
+				<h:commandLink value= "Goto school Prime Updated" action="SchoolPrimeUpdated"></h:commandLink>
+				
 			</h:panelGrid>
 		</h:form>
 

@@ -10,14 +10,13 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.xml.bind.annotation.XmlRootElement;
 
 
 
 @Entity
 @Table(schema="school")
 @NamedQueries({ @NamedQuery(name = SchoolModel.FIND_ALL, query = "SELECT t FROM SchoolModel t order by t.id") })
-@XmlRootElement
+
 
 public class SchoolModel {
 	
@@ -35,7 +34,6 @@ public class SchoolModel {
 	private String marks;
 	@Transient
 	private boolean edit = false;
-	
 	
 	public SchoolModel(String name, String className, String marks) {
 		
@@ -69,9 +67,7 @@ public class SchoolModel {
 	}
 	public void setMarks(String marks) {
 		this.marks = marks;
-	}
-	
-	
+	}	
 	
 	public boolean isEdit() {
 		return edit;
@@ -83,14 +79,6 @@ public class SchoolModel {
 	public String toString() {
 		return "School [id=" + id + ", name=" + name + ", className=" + className + ", marks=" + marks+
 				", edit = "+ edit + "]";
-	}
-	
-	
-	
-	
-	
-	
-	
-	
+	}	
 
 }

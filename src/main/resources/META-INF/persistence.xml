@@ -72,6 +72,47 @@
 	
 	
 	
+	<persistence-unit name="updateschoolDataModel"
+		transaction-type="JTA">
+		<provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
+		<jta-data-source>java:openejb/Resource/applicationPetstoreDS</jta-data-source>
+		<class>com.schoolmodel.UpdateSchoolModel</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+			<property name="openejb.jpa.init-entitymanager" value="true" />
+			<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)" />
+			<property name="openjpa.Log"
+				value="DefaultLevel=WARN, Runtime=INFO, Tool=INFO, SQL=TRACE" />
+			<property name="openjpa.jdbc.DBDictionary"
+				value="SupportsMultipleNontransactionalResultSets=false,RequiresAutoCommitForMetaData=false" />
+		</properties>
+	</persistence-unit>
+	
+	
+	<persistence-unit name="updateschoolDataModelLocalPU"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
+		<non-jta-data-source>java:openejb/Resource/applicationLocalDS</non-jta-data-source>
+		<class>com.schoolmodel.UpdateSchoolModel</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+			<property name="openejb.jpa.init-entitymanager" value="true" />
+			<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)" />
+			<property name="openjpa.Log"
+				value="DefaultLevel=WARN, Runtime=INFO, Tool=INFO, SQL=TRACE" />
+			<property name="openjpa.jdbc.DBDictionary"
+				value="SupportsMultipleNontransactionalResultSets=false,RequiresAutoCommitForMetaData=false" />
+		</properties>
+	</persistence-unit>
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

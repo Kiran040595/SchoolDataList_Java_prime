@@ -17,18 +17,12 @@ public class SchoolLazy extends LazyDataModel<SchoolModel> {
 	public SchoolLazy(SchoolServiceImp schoolService) {
         this.schoolService = schoolService;
     }
-	
-	
-	
-	
-	
+
 	@Override
     public List<SchoolModel> load(int first, int pageSize, String sortField,
                                SortOrder sortOrder, Map<String, Object> filters) {
 
         List<SchoolModel> data = schoolService.getSchoolList(first,pageSize,sortField,sortOrder,filters);
-        
- //       int dataSize = schoolService.getTotalSchoolList();
         rowCount = schoolService.getFilteredRowCount(filters);
         this.setRowCount(rowCount);
         
@@ -36,23 +30,8 @@ public class SchoolLazy extends LazyDataModel<SchoolModel> {
     }
 
 
-
-
-
 	public int getRowCount() {
 		return rowCount;
 	}
-
-
-
-
-
-	
-	
-	
-	
-	
-	
-	
 
 }

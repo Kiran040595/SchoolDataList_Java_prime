@@ -40,42 +40,6 @@ public class SchoolControlPack implements Serializable {
 	
 	private LazyDataModel<SchoolModel> lazySchoolModel;
 	
-//	private List<SchoolModel> filteredSchools;
-// 
-//
-//
-//
-//    public List<SchoolModel> getFilteredSchools() {
-//		return filteredSchools;
-//	}
-//
-//	public void setFilteredSchools(List<SchoolModel> filteredSchools) {
-//		this.filteredSchools = filteredSchools;
-//	}
-
-	public UIForm getForm() {
-		return form;
-	}
-
-	public void setForm(UIForm form) {
-		this.form = form;
-	}
-
-	public UIForm getTableForm() {
-		return tableForm;
-	}
-
-	public void setTableForm(UIForm tableForm) {
-		this.tableForm = tableForm;
-	}
-
-	public UICommand getAddCommand() {
-		return addCommand;
-	}
-
-	public void setAddCommand(UICommand addCommand) {
-		this.addCommand = addCommand;
-	}
 
 	@Inject
     private SchoolServiceImp schoolService;
@@ -90,9 +54,7 @@ public class SchoolControlPack implements Serializable {
     public void init() {
     	 lazySchoolModel = new SchoolLazy(schoolService);
     	 
-    	 
-    	   	
-//      schools = schoolService.findAll();
+//      schools = schoolService.findAll();   //Toget the data without lazyModel
 //     newSchool= new SchoolModel();
     }
 
@@ -104,8 +66,6 @@ public class SchoolControlPack implements Serializable {
         return schools;
     }
     
-
-    
     public void delete() {
         schoolService.deleteSchool(school);
         schools = schoolService.findAll();
@@ -114,14 +74,14 @@ public class SchoolControlPack implements Serializable {
     
  //  without primeFaces update code
     
-//    public List<SchoolModel> updateSchool() {
-//        schoolService.updateSchool(updatedSchool);
-//        schools = schoolService.findAll();
-//        updatedSchool = new SchoolModel();
-//        setEditDisabled(false);
-//		school.setEdit(false);
-//        return schools;
-//    }
+    public List<SchoolModel> updateSchooll() {
+        schoolService.updateSchool(updatedSchool);
+        schools = schoolService.findAll();
+        updatedSchool = new SchoolModel();
+        setEditDisabled(false);
+		school.setEdit(false);
+        return schools;
+    }
     
     public void updateSchool(RowEditEvent event) {
         SchoolModel editedSchool = (SchoolModel) event.getObject();
@@ -133,38 +93,10 @@ public class SchoolControlPack implements Serializable {
     public void onRowCancel(RowEditEvent event) {
         FacesMessage msg = new FacesMessage("Edit Cancelled", String.valueOf(event.getObject().getClass()));
         FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
+    }   
     
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-    
-    
-    
-
-    
-    
-    
-
-    
-    
- 
-
-
-   
-
+  
     public List<SchoolModel> getSchools() {
-//    	if (filteredSchools != null) {
-//            return filteredSchools;
-//        }
-    	
         return schools;
     }
 
@@ -222,56 +154,29 @@ public class SchoolControlPack implements Serializable {
 	
 	public LazyDataModel<SchoolModel> getLazySchoolModel() {
         return lazySchoolModel;
-    }
-	
-	
-    
-    
-//  public String edit() {
-//  	setEditDisabled(true);
-//		school.setEdit(true);
-//		schoolEdit = new SchoolModel();
-//		schoolEdit.setId(school.getId());
-//		schoolEdit.setName(school.getName());
-//		schoolEdit.setClassName(school.getClassName());
-//		schoolEdit.setEdit(false);
-//		schoolEdit.setMarks(school.getMarks());
-//		return null;
-//	}
-  
-  
-  
-  
-//  public String editSave() {
-//		setEditDisabled(false);
-//		school.setEdit(false);
-//		schoolService.editSchool(school);
-//		schools = schoolService.findAll();
-//	
-//		return null;
-//	}
-  
-  
-  
-  
+    } 
+	public UIForm getForm() {
+		return form;
+	}
 
-  
-  
-//  public String editReset() {
-//		setEditDisabled(false);
-//		school.setEdit(false);
-//		school.setId(schoolEdit.getId());
-//		school.setName(schoolEdit.getName());
-//		school.setClassName(schoolEdit.getClassName());
-//		school.setMarks(schoolEdit.getMarks());
-//		return null;
-//	}
-   
+	public void setForm(UIForm form) {
+		this.form = form;
+	}
 
+	public UIForm getTableForm() {
+		return tableForm;
+	}
 
+	public void setTableForm(UIForm tableForm) {
+		this.tableForm = tableForm;
+	}
 
+	public UICommand getAddCommand() {
+		return addCommand;
+	}
 
-    
-    
+	public void setAddCommand(UICommand addCommand) {
+		this.addCommand = addCommand;
+	}   
 
 }

@@ -32,9 +32,6 @@ public class SchoolServiceImp {
 	@PersistenceContext(unitName = "schoolDataModel", type = PersistenceContextType.EXTENDED)
     private EntityManager em;
 
-   
-
-	private Query query;
 
     private EntityManager getEntityManager() {
         try {
@@ -46,11 +43,6 @@ public class SchoolServiceImp {
             return null;
         }
     }
-    
-    
-    
-    
-    
     
 
     public SchoolModel createSchool(SchoolModel school) {
@@ -71,8 +63,7 @@ public class SchoolServiceImp {
     
     public void deleteSchool(SchoolModel school) {
         try {
-            SchoolModel mergedSchool = em.merge(school);
-            em.remove(mergedSchool);
+            em.remove(school);
             em.flush();
         } catch (Exception e) {
             System.out.println("Exception in deleteSchool() " + e);
@@ -164,20 +155,7 @@ public class SchoolServiceImp {
     List<SchoolModel> list = query.getResultList();
     return list;
 
-    }
-    
-    
-    
-    
-         
-    	
-    	
-//        Query query = em.createQuery("SELECT e FROM SchoolModel e");
-//        query.setFirstResult(start);
-//        query.setMaxResults(size);
-//        List<SchoolModel> list = query.getResultList();
-//        return list;
-    
+    }   
     
     public int getFilteredRowCount(Map<String, Object> filters) {
         
@@ -205,9 +183,6 @@ public class SchoolServiceImp {
                         (new Predicate[0])));
             }
         }
-     
-
-
     
     Long count = em.createQuery(select).getSingleResult();
     return count.intValue();

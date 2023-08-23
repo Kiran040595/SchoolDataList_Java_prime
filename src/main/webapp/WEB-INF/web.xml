@@ -8,6 +8,7 @@
   	<welcome-file>Todo.xhtml</welcome-file>
     <welcome-file>SchoolDataList.xhtml</welcome-file>
     <welcome-file>SchoolPrime.xhtml</welcome-file>
+    <welcome-file>SchoolPrimeUpdated.xhtml</welcome-file>
   </welcome-file-list>
   <context-param>
     <param-name>primefaces.THEME</param-name>
